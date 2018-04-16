@@ -71,10 +71,7 @@ namespace WindowsFormsCustomServerAgent.Job
             }
         }
 
-        public void SetDefault()
-        {
-            CurrentDate = DateTime.Now;
-        }
+        public void SetDefault() => CurrentDate = DateTime.Now;
 
         public abstract string Execute();
     }

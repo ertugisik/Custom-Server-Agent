@@ -12,10 +12,7 @@ namespace WindowsFormsCustomServerAgent.Job
         public delegate void JobExecutedHandler(object sender, JobExecutedEventArgs e);
         public event JobExecutedHandler JobExecuted;
 
-        public JobTrigger(Job job)
-        {
-            this.job = job;
-        }
+        public JobTrigger(Job job) => this.job = job;
 
         public JobExecuteContext Execute()
         {
@@ -25,7 +22,7 @@ namespace WindowsFormsCustomServerAgent.Job
                 var summary = job.Execute();
                 job.Context.EndFireTime = DateTime.Now;
 
-                AfterJobExecuted(new JobExecutedEventArgs(job, summary));
+                AfterJobExecuted(new JobExecutedEventArgs(job: job, summary: summary));
 
                 return job.Context;
             }
@@ -33,12 +30,6 @@ namespace WindowsFormsCustomServerAgent.Job
             return null;
         }
 
-        private void AfterJobExecuted(JobExecutedEventArgs arg)
-        {
-            if (JobExecuted != null)
-            {
-                JobExecuted(job, arg);
-            }
-        }
+        private void AfterJobExecuted(JobExecutedEventArgs arg) => JobExecuted?.Invoke(job, arg);
     }
 }
